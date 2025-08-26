@@ -102,8 +102,8 @@
       color: var(--gold-4);
     }
 
-    /* Elimination Progress Bar */
-    .elimination-progress{
+    /* Progress Bars */
+    .progress-container{
       margin: 20px 0;
       padding: 15px;
       background: var(--card-bg);
@@ -129,6 +129,7 @@
       background: linear-gradient(180deg, #f8f1d2, #efe2a8 70%, #e2c969);
       box-shadow: inset 0 2px 6px rgba(255,255,255,.8), inset 0 -3px 6px rgba(166,124,0,.25);
       border:1px solid rgba(166,124,0,.4);
+      margin-bottom: 8px;
     }
     .bar{
       position:absolute; 
@@ -146,7 +147,6 @@
 
     .progress-text{
       text-align: center;
-      margin-top: 8px;
       font-weight: bold;
       color: var(--gold-4);
     }
@@ -404,9 +404,17 @@
       </div>
     </div>
 
-    <!-- Elimination Progress Bar -->
-    <div class="elimination-progress">
-      <div class="progress-label">Elimination Progress</div>
+    <!-- Progress Bars -->
+    <div class="progress-container">
+      <div class="progress-label">Non-negotiables Completion</div>
+      <div class="progress">
+        <div class="bar" id="nonNegotiablesBar"></div>
+      </div>
+      <div class="progress-text" id="nonNegotiablesText">0%</div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-label">Elimination Purity</div>
       <div class="progress">
         <div class="bar" id="eliminationBar"></div>
       </div>
@@ -422,7 +430,7 @@
       <div class="section-content" id="content-non-negotiables">
         <div class="form-group">
           <div class="checkbox-group">
-            <input type="checkbox" id="early_wakeup">
+            <input type="checkbox" id="early_wakeup" onchange="updateNonNegotiablesProgress()">
             <span>Early Wake up</span>
           </div>
           <input type="time" class="time-input" id="wakeup_time" placeholder="Wake up time">
@@ -430,7 +438,7 @@
 
         <div class="form-group">
           <div class="checkbox-group">
-            <input type="checkbox" id="reading">
+            <input type="checkbox" id="reading" onchange="updateNonNegotiablesProgress()">
             <span>Reading</span>
           </div>
           <label for="reading_reflection">Reading Reflection</label>
@@ -439,17 +447,17 @@
         </div>
 
         <div class="checkbox-group">
-          <input type="checkbox" id="meditation">
+          <input type="checkbox" id="meditation" onchange="updateNonNegotiablesProgress()">
           <span>Meditation</span>
         </div>
 
         <div class="checkbox-group">
-          <input type="checkbox" id="journaling">
+          <input type="checkbox" id="journaling" onchange="updateNonNegotiablesProgress()">
           <span>Journaling</span>
         </div>
 
         <div class="checkbox-group">
-          <input type="checkbox" id="workout">
+          <input type="checkbox" id="workout" onchange="updateNonNegotiablesProgress()">
           <span>Workout</span>
         </div>
 
@@ -511,6 +519,64 @@
       </div>
     </div>
 
+    <!-- Elimination Checklist Section -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('elimination')">
+        <h2>Elimination Checklist</h2>
+        <span class="section-toggle" id="toggle-elimination">▼</span>
+      </div>
+      <div class="section-content" id="content-elimination">
+        <p style="margin-bottom: 20px; font-style: italic; color: var(--gold-4);">
+          Start each day pure (all checked). Untick when you fall into a vice.
+        </p>
+        
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_drinking" checked onchange="updateEliminationProgress()">
+          <span>Drinking ("not even a sip" policy)</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_drugs" checked onchange="updateEliminationProgress()">
+          <span>Drugs (yes, every single one)</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_gossiping" checked onchange="updateEliminationProgress()">
+          <span>Gossiping / idle chatter</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_celebrity_worship" checked onchange="updateEliminationProgress()">
+          <span>Worshiping celebrities and politicians</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="good_sleep" checked onchange="updateEliminationProgress()">
+          <span>Not getting sleep</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_phone_addiction" checked onchange="updateEliminationProgress()">
+          <span>Smartphone / social media addiction</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="emotional_independence" checked onchange="updateEliminationProgress()">
+          <span>Putting your emotions at the mercy of someone else</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_negative_people" checked onchange="updateEliminationProgress()">
+          <span>Surrounding yourself with negative people</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_negative_self_talk" checked onchange="updateEliminationProgress()">
+          <span>Using self-defeating talk and telling yourself negative stories</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="no_mindless_entertainment" checked onchange="updateEliminationProgress()">
+          <span>Mindless entertainment / the consumer life</span>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="guard_time" checked onchange="updateEliminationProgress()">
+          <span>Throwing your time away to anyone and anything that requests it</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Before Bed Section -->
     <div class="section">
       <div class="section-header" onclick="toggleSection('before-bed')">
@@ -541,60 +607,6 @@
       </div>
     </div>
 
-    <!-- Elimination Checklist Section -->
-    <div class="section">
-      <div class="section-header" onclick="toggleSection('elimination')">
-        <h2>Elimination Checklist</h2>
-        <span class="section-toggle" id="toggle-elimination">▼</span>
-      </div>
-      <div class="section-content" id="content-elimination">
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_drinking" onchange="updateEliminationProgress()">
-          <span>Drinking ("not even a sip" policy)</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_drugs" onchange="updateEliminationProgress()">
-          <span>Drugs (yes, every single one)</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_gossiping" onchange="updateEliminationProgress()">
-          <span>Gossiping / idle chatter</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_celebrity_worship" onchange="updateEliminationProgress()">
-          <span>Worshiping celebrities and politicians</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="good_sleep" onchange="updateEliminationProgress()">
-          <span>Not getting sleep</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_phone_addiction" onchange="updateEliminationProgress()">
-          <span>Smartphone / social media addiction</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="emotional_independence" onchange="updateEliminationProgress()">
-          <span>Putting your emotions at the mercy of someone else</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_negative_people" onchange="updateEliminationProgress()">
-          <span>Surrounding yourself with negative people</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_negative_self_talk" onchange="updateEliminationProgress()">
-          <span>Using self-defeating talk and telling yourself negative stories</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="no_mindless_entertainment" onchange="updateEliminationProgress()">
-          <span>Mindless entertainment / the consumer life</span>
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="guard_time" onchange="updateEliminationProgress()">
-          <span>Throwing your time away to anyone and anything that requests it</span>
-        </div>
-      </div>
-    </div>
-
     <!-- Daily Notes Section -->
     <div class="section">
       <div class="section-header" onclick="toggleSection('daily-notes')">
@@ -620,6 +632,8 @@
       updateDateDisplay();
       loadDataForDate(currentDate);
       updateEliminationProgress();
+      updateNonNegotiablesProgress();
+      setupAutoSave();
     });
 
     function updateDateDisplay() {
@@ -652,7 +666,7 @@
         if (input.type === 'checkbox') {
           data[input.id] = input.checked;
         } else if (input.type === 'file') {
-          // Skip file inputs for now
+          // Skip file inputs for localStorage
         } else {
           data[input.id] = input.value;
         }
@@ -668,11 +682,19 @@
       const allData = JSON.parse(localStorage.getItem('goldieRatioData') || '{}');
       const dateData = allData[dateKey] || {};
       
+      // Check if this is a new date (no saved data)
+      const isNewDate = Object.keys(dateData).length === 0;
+      
       // Load all form inputs
       const inputs = document.querySelectorAll('input, textarea');
       inputs.forEach(input => {
         if (input.type === 'checkbox') {
-          input.checked = dateData[input.id] || false;
+          if (isNewDate && input.id.startsWith('no_') || input.id === 'good_sleep' || input.id === 'emotional_independence' || input.id === 'guard_time') {
+            // For elimination checkboxes on new dates, start them checked (pure state)
+            input.checked = true;
+          } else {
+            input.checked = dateData[input.id] || false;
+          }
         } else if (input.type === 'file') {
           // Skip file inputs
         } else {
@@ -681,9 +703,9 @@
       });
       
       updateEliminationProgress();
+      updateNonNegotiablesProgress();
     }
 
-    // Auto-save functionality
     function setupAutoSave() {
       const saveTimers = {};
       
@@ -749,6 +771,23 @@
       document.getElementById('eliminationText').textContent = percentage + '%';
     }
 
+    function updateNonNegotiablesProgress() {
+      const nonNegotiableCheckboxes = [
+        'early_wakeup', 'reading', 'meditation', 'journaling', 'workout'
+      ];
+      
+      let checkedCount = 0;
+      nonNegotiableCheckboxes.forEach(id => {
+        if (document.getElementById(id).checked) {
+          checkedCount++;
+        }
+      });
+      
+      const percentage = Math.round((checkedCount / nonNegotiableCheckboxes.length) * 100);
+      document.getElementById('nonNegotiablesBar').style.width = percentage + '%';
+      document.getElementById('nonNegotiablesText').textContent = percentage + '%';
+    }
+
     function addGratitude() {
       gratitudeCount++;
       const gratitudeList = document.getElementById('gratitudeList');
@@ -773,9 +812,6 @@
         reader.readAsDataURL(file);
       }
     }
-
-    // Initialize auto-save
-    setupAutoSave();
   </script>
 </body>
 </html>
